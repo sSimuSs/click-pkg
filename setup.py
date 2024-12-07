@@ -5,7 +5,7 @@ here = pathlib.Path(__file__).parent.resolve()
 
 long_description = (here / "README.md").read_text(encoding="utf-8")
 
-keywords = "click-shop-api, click, click-merchant, click-pkg, click-api, click-python-integration, click-integration, click-python, click-gateway, click-payment, click-payment-gateway, click-integration-python, click-api-client, click-django, click-rest-api" # noqa
+keywords = "click-shop-api,click,click-merchant,click-pkg,click-api,click-python-integration,click-integration,click-python,click-gateway,click-payment,click-payment-gateway,click-integration-python,click-api-client,click-django,click-rest-api" # noqa
 
 setup(
     name='click-pkg',
