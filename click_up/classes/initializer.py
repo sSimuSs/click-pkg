@@ -18,7 +18,7 @@ class Initializer:
         self.service_id = service_id
         self.merchant_id = merchant_id
 
-    def generate_paylik(self, id, amount, return_url):
+    def generate_pay_link(self, id, amount, return_url):
         """
         Generate a payment URL for the Paylik system.
 

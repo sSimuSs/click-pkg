@@ -92,7 +92,7 @@ click_up = ClickUp(service_id="your-service-id", merchant_id="your-merchant-id")
 
 
 # Generate Paylik payment link
-paylink = click_up.initializer.generate_paylik(
+paylink = click_up.initializer.generate_pay_link(
   id=1, # id maybe order_id or acount_id (user_id, chat_id and etc..)
   amount=100,
   return_url="https://example.com"
