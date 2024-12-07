@@ -77,3 +77,29 @@ python3 manage.py makemigrations && python manage.py migrate
 ```
 
 🎉 Congratulations you have been integrated click with django, keep reading docs. After successfull migrations check your admin panel and see results what happened.
+
+
+## Generate Pay Link
+Example to generate link:
+
+- Input
+
+```python
+from click_up import ClickUp
+
+
+click_up = ClickUp(service_id="your-service-id", merchant_id="your-merchant-id") # alternatively you can use settings variables as well here.
+
+
+# Generate Paylik payment link
+paylink = click_up.initializer.generate_paylik(
+  id=1, # id maybe order_id or acount_id (user_id, chat_id and etc..)
+  amount=100,
+  return_url="https://example.com"
+)
+```
+
+- Output
+```
+https://my.click.uz/services/pay?service_id=service_id&merchant_id=merchant_id&amount=1000&transaction_param=1&return_url=https://example.com
+```
