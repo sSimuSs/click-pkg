@@ -168,6 +168,9 @@ class ClickWebhook(APIView):
             transaction_id=params.click_trans_id
         )
 
+        # callback event
+        self.created_payment(params)
+
         return {
             "click_trans_id": params.click_trans_id,
             "merchant_trans_id": account.id,
@@ -207,6 +210,11 @@ class ClickWebhook(APIView):
             "error": params.error,
             "error_note": params.error_note
         }
+
+    def created_payment(self, params):
+        """
+        created payment method process you can ovveride it
+        """
 
     def successfully_payment(self, params):
         """
