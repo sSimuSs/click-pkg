@@ -65,3 +65,27 @@ class ClickTransaction(models.Model):
             transaction.save()
 
         return transaction
+
+    @classmethod
+    def update_or_create(
+        cls,
+        account,
+        transaction_id,
+        amount,
+        state=None
+    ) -> "ClickTransaction":
+        """
+        Update an existing transaction or create a new one if it doesn't exist
+        """
+        # pylint: disable=E1101
+        transaction, _ = ClickTransaction.objects.update_or_create(
+            account=account,
+            amount=amount,
+            transaction_id=transaction_id,
+            defaults={"state": cls.INITIATING},
+        )
+        if state is not None:
+            transaction.state = state
+            transaction.save()
+
+        return transaction

@@ -189,7 +189,7 @@ class ClickWebhook(APIView):
             if int(params.error) < 0:
                 state = ClickTransaction.CANCELLED
 
-        transaction = ClickTransaction.get_or_create(
+        transaction = ClickTransaction.update_or_create(
             account=account,
             amount=params.amount,
             transaction_id=params.click_trans_id,
