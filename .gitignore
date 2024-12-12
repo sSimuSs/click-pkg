@@ -1,3 +1,5 @@
 click_pkg.egg-info/
 venv/
 dist/
+*.pyc
+__pycache__/
