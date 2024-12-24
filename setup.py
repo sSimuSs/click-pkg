@@ -1,5 +1,6 @@
 import pathlib
-from setuptools import setup, find_packages
+
+from setuptools import find_packages, setup
 
 here = pathlib.Path(__file__).parent.resolve()
 
@@ -9,7 +10,7 @@ keywords = "click-shop-api,click,click-merchant,click-pkg,click-api,click-python
 
 setup(
     name='click-pkg',
-    version='0.7',
+    version='0.8',
     license='MIT',
     author="Muhammadali Akbarov",
     author_email='muhammadali17abc@gmail.com',

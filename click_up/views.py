@@ -205,7 +205,7 @@ class ClickWebhook(APIView):
 
         return {
             "click_trans_id": params.click_trans_id,
-            "merchant_trans_id": transaction.account.id,
+            "merchant_trans_id": transaction.account_id,
             "merchant_prepare_id": transaction.id,
             "error": params.error,
             "error_note": params.error_note

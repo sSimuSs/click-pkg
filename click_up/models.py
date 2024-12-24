@@ -24,11 +24,7 @@ class ClickTransaction(models.Model):
     ]
     state = models.IntegerField(choices=STATE, default=CREATED)
     transaction_id = models.CharField(max_length=255)
-    account = models.ForeignKey(
-        AccountModel,
-        related_name="click_transactions",
-        on_delete=models.CASCADE
-    )
+    account_id = models.BigIntegerField(null=False)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
