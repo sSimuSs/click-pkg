@@ -10,7 +10,7 @@ keywords = "click-shop-api,click,click-merchant,click-pkg,click-api,click-python
 
 setup(
     name='click-pkg',
-    version='0.8',
+    version='0.9',
     license='MIT',
     author="Muhammadali Akbarov",
     author_email='muhammadali17abc@gmail.com',
