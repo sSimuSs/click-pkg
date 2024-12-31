@@ -163,7 +163,7 @@ class ClickWebhook(APIView):
         create transaction in your system
         """
         transaction = ClickTransaction.get_or_create(
-            account=account,
+            account_id=account.id,
             amount=params.amount,
             transaction_id=params.click_trans_id
         )
@@ -190,7 +190,7 @@ class ClickWebhook(APIView):
                 state = ClickTransaction.CANCELLED
 
         transaction = ClickTransaction.update_or_create(
-            account=account,
+            account_id=account.id,
             amount=params.amount,
             transaction_id=params.click_trans_id,
             state=state

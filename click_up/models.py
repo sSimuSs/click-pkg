@@ -41,7 +41,7 @@ class ClickTransaction(models.Model):
     @classmethod
     def get_or_create(
         cls,
-        account,
+        account_id,
         transaction_id,
         amount,
         state=None
@@ -51,7 +51,7 @@ class ClickTransaction(models.Model):
         """
         # pylint: disable=E1101
         transaction, _ = ClickTransaction.objects.get_or_create(
-            account=account,
+            account_id=account_id,
             amount=amount,
             transaction_id=transaction_id,
             defaults={"state": cls.INITIATING},
@@ -65,7 +65,7 @@ class ClickTransaction(models.Model):
     @classmethod
     def update_or_create(
         cls,
-        account,
+        account_id,
         transaction_id,
         amount,
         state=None
@@ -75,7 +75,7 @@ class ClickTransaction(models.Model):
         """
         # pylint: disable=E1101
         transaction, _ = ClickTransaction.objects.update_or_create(
-            account=account,
+            account_id=account_id,
             amount=amount,
             transaction_id=transaction_id,
             defaults={"state": cls.INITIATING},
