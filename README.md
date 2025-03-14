@@ -55,7 +55,7 @@ class ClickWebhookAPIView(ClickWebhook):
         print(f"payment cancelled params: {params}")
 ```
 
-Add a `payme` path to core of urlpatterns:
+Add a `click webhook` path to core of urlpatterns:
 
 ```python
 from django.urls import path
