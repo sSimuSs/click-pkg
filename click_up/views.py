@@ -120,14 +120,17 @@ class ClickWebhook(APIView):
         except AccountModel.DoesNotExist:
             raise exceptions.AccountNotFound("Account not found")
 
-    def check_amount(self, account: AccountModel, params: ClickShopApiRequest): # type: ignore # noqa
+    def check_amount(self, account: AccountModel, params: ClickShopApiRequest):  # type: ignore  # noqa
         """
-        check if amount is valid
+        Validate the received amount, considering optional commission percent.
         """
         received_amount = float(params.amount)
-        expected_amount = float(getattr(account, settings.CLICK_AMOUNT_FIELD))
+        base_amount = float(getattr(account, settings.CLICK_AMOUNT_FIELD))
+        commission_percent = getattr(settings, "CLICK_COMMISSION_PERCENT", 0)
 
-        if received_amount - expected_amount > 0.01:
+        expected_amount = round(base_amount * (1 + commission_percent / 100), 2) # noqa
+
+        if abs(received_amount - expected_amount) > 0.01:
             raise exceptions.IncorrectAmount("Incorrect parameter amount")
 
     def check_dublicate_transaction(self, params: ClickShopApiRequest):  # type: ignore # noqa
