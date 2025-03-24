@@ -1,8 +1,33 @@
 <h1 align="center">Click Software Development Kit</h1>
-
 <p align="center">
   <a href="https://t.me/+lO97J78xBj45MzBi">
     <img src="https://img.shields.io/badge/Support%20Group-blue?logo=telegram&logoColor=white" alt="Support Group on Telegram"/>
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://docs.pay-tech.uz"><img src="https://img.shields.io/static/v1?message=Documentation&logo=gitbook&logoColor=ffffff&label=%20&labelColor=5c5c5c&color=3F89A1"></a>
+  <a href="https://github.com/PayTechUz/click-pkg"><img src="https://img.shields.io/badge/Open_Source-❤️-FDA599?"/></a>
+  <a href="https://github.com/PayTechUz/click-pkg/issues">
+    <img src="https://img.shields.io/github/issues/PayTechUz/click-pkg" />
+  </a>
+  <a href="https://pepy.tech/project/click-pkg">
+    <img src="https://static.pepy.tech/badge/click-pkg" alt="PyPI - Downloads" />
+  </a>
+</p>
+<p align="center">Welcome to payme-pkg, the open source payme SDK for Python.</p>
+
+<p align="center">You can use it for test and production mode. Join our community and ask everything you need.</p>
+
+<a href="https://docs.pay-tech.uz">
+  <p align="center">Visit the full documentation for Click Shop API</p>
+</a>
+
+<p align="center">
+  <a href="https://youtu.be/beIJGe2ftcw?si=VjQETGnzdyiOafgx" target="_blank">
+    <img src="https://img.shields.io/badge/Watch%20Demo-red?logo=youtube&logoColor=white&style=for-the-badge" 
+         alt="Watch the YouTube Demo" 
+         style="width: 150px; height: 30px; border-radius: 7px;" />
   </a>
 </p>
 
@@ -56,7 +81,7 @@ class ClickWebhookAPIView(ClickWebhook):
         print(f"payment cancelled params: {params}")
 ```
 
-Add a `payme` path to core of urlpatterns:
+Add a `click webhook` path to core of urlpatterns:
 
 ```python
 from django.urls import path
