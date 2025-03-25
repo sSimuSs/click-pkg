@@ -1,4 +1,4 @@
-<h1 align="center">Click Software Development Kit</h1>
+<h1 align="center">Click Software Development Kit for Django and FastAPI</h1>
 <p align="center">
   <a href="https://t.me/+lO97J78xBj45MzBi">
     <img src="https://img.shields.io/badge/Support%20Group-blue?logo=telegram&logoColor=white" alt="Support Group on Telegram"/>
@@ -128,4 +128,124 @@ paylink = click_up.initializer.generate_pay_link(
 - Output
 ```
 https://my.click.uz/services/pay?service_id=service_id&merchant_id=merchant_id&amount=1000&transaction_param=1&return_url=https://example.com
+```
+
+
+## Installation and example usage for FastAPI
+```python
+from sqlalchemy.orm import Session
+from sqlalchemy import Column, Integer, Float, String
+from sqlalchemy.orm import declarative_base
+
+from fastapi import FastAPI, Depends, Request, Body
+
+from clickup_fastapi.core.client import ClickUp
+from clickup_fastapi.utils.const import Action
+from clickup_fastapi.api.webhook import process_webhook, Account
+from clickup_fastapi.dependencies import click_database_manager, ClickSettings
+
+app = FastAPI()
+Base = declarative_base()
+
+settings = ClickSettings(
+    service_id="your-service-id",
+    merchant_id="your-merchant-id",
+    secret_key="your-secret-key",
+)
+
+DB_SESSION_LOCAL = click_database_manager(
+    db_url="sqlite:///database.db" # you can use another database engines
+)
+
+
+class Order(Base):
+    __tablename__ = "orders"
+
+    id = Column(Integer, primary_key=True, index=True)
+    amount = Column(Float, nullable=False)
+    status = Column(String(50), nullable=False)
+
+
+# creating tables
+Base.metadata.create_all(bind=DB_SESSION_LOCAL().get_bind())
+
+
+def get_db():
+    db = DB_SESSION_LOCAL()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+def fetch_account(merchant_trans_id: str, db: Session) -> Account:
+    order = db.query(Order).filter_by(id=merchant_trans_id).first()
+    account = Account(
+        id=order.id,
+        amount=order.amount
+    )
+
+    return account
+
+
+@app.post("/v1/webhook/click")
+async def webhook_endpoint(
+    request: Request,
+    db: Session = Depends(get_db),
+    settings: ClickSettings = Depends(lambda: settings)
+):
+    params = await request.form()
+    merchant_trans_id = params.get("merchant_trans_id")
+    account = fetch_account(merchant_trans_id, db)
+
+    response = await process_webhook(params, db, settings, account)
+
+    if "merchant_prepare_id" in response:
+        order = db.query(Order).filter_by(id=merchant_trans_id).first()
+
+        # checking for successfull transaction and change our order account
+        if response["error"] >= 0 and params.get("action") == Action.COMPLETE:
+            order.status = "success"
+
+        elif response["error"] != 0:  # Transaction cancelled
+            order.status = "cancelled"
+
+        db.commit()
+
+    return response
+
+
+@app.post("/api/v1/order/create")
+async def create_order(
+    amount: float = Body(embed=True),
+    db: Session = Depends(get_db),
+):
+    order = Order(amount=amount, status="pending")
+
+    db.add(order)
+    db.commit()
+    db.refresh(order)
+
+    click_up = ClickUp(
+        service_id=settings.service_id,
+        merchant_id=settings.merchant_id,
+        secret_key=settings.secret_key,
+    )
+
+    # generate payment link
+    payment_link = await click_up.initializer.generate_pay_link(
+        id=order.id,
+        amount=order.amount,
+        return_url="https://mytaxi.uz"
+    )
+
+    return {
+        "order_id": order.id,
+        "payment_link": payment_link
+    }
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
