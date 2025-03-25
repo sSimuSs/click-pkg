@@ -215,7 +215,7 @@ async def webhook_endpoint(
     return response
 
 
-@app.post("/api/v1/order/create")
+@app.post("/v1/order/create")
 async def create_order(
     amount: float = Body(embed=True),
     db: Session = Depends(get_db),
@@ -236,7 +236,7 @@ async def create_order(
     payment_link = await click_up.initializer.generate_pay_link(
         id=order.id,
         amount=order.amount,
-        return_url="https://mytaxi.uz"
+        return_url="https://example.uz"
     )
 
     return {
