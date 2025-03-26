@@ -4,7 +4,6 @@ from django.conf import settings
 from click_up.models import ClickTransaction
 
 
-@admin.register(ClickTransaction)
 class ClickTransactionAdmin(admin.ModelAdmin):
     """
     Admin Model for ClickTransaction
