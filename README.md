@@ -59,7 +59,9 @@ CLICK_MERCHANT_ID = "your-merchant-id"
 CLICK_SECRET_KEY = "your-secret-key"
 CLICK_ACCOUNT_MODEL = "order.models.Order" # your order model path.
 CLICK_AMOUNT_FIELD = "amount" # your amount field that's belongs to your order model
+
 CLICK_COMMISSION_PERCENT = "(optional int field) your companies comission percent if applicable"
+CLICK_DISABLE_ADMIN = False # (optionally configuration if you want to disable change to True)
 ```
 
 Create a new View that about handling call backs
