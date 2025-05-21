@@ -52,3 +52,24 @@ class Http:
             f.close()
 
         return result.json()
+
+    def delete(self, url, headers, timeout=10):
+        """
+        Send a POST request to the given URL with
+        the provided body and headers.
+
+        Args:
+            url (str): The URL to send the request to.
+            headers (dict): The request headers.
+            timeout (dict, optional): The request timeouts. Defaults to None.
+
+        Returns:
+            dict: The response from the server.
+        """
+        headers = self.headers | headers
+        result = request(
+            method="DELETE", url=url, headers=headers, timeout=timeout
+        )
+        result.raise_for_status()
+
+        return result.json()
