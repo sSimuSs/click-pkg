@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='clicktransaction',
             name='click_payment_id',
-            field=models.CharField(max_length=255, help_text='click_paydoc_id'),
+            field=models.CharField(max_length=255,  blank=True, null=True, help_text='click_paydoc_id'),
         ),
     ]
