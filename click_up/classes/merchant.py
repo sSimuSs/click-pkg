@@ -9,14 +9,14 @@ class MerchantApi:
     A class for interacting with the CLICK Merchant API.
     """
 
-    def __init__(self, service_id, merchant_user_id, secret_key):
+    def __init__(self, service_id, merchant_user_id, secret_key, requests_logs_file_path=None):
         """
         Initialize the MerchantApi instance.
         :param service_id: Service ID provided by CLICK.
         :param merchant_user_id: Merchant User ID provided by CLICK.
         :param secret_key: Secret key for authentication.
         """
-        self.http = Http()
+        self.http = Http(requests_logs_file_path)
         self.secret_key = secret_key
         self.service_id = service_id
         self.merchant_user_id = merchant_user_id

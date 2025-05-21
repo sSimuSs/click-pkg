@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from requests import request
 
@@ -7,7 +8,8 @@ class Http:
     """
     A class for making HTTP requests.
     """
-    def __init__(self):
+    def __init__(self, requests_logs_file_path=None):
+        self.requests_logs_file_path = requests_logs_file_path
         self.headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -34,4 +36,18 @@ class Http:
             headers=headers, data=data, timeout=timeout
         )
         result.raise_for_status()
+
+        f = open(self.requests_logs_file_path, "a")
+        f.write(f"\n\n########################  {datetime.now()}\n")
+        f.write("--- Request\n")
+        f.write(f"{result.request.url}\n")
+        f.write(f"{json.dumps(dict(result.request.headers), indent=4)}\n")
+        f.write(f"{json.dumps(body, indent=4)}\n")
+        try:
+            f.write("--- Response\n")
+            f.write(f"{json.dumps(result.json(), indent=4)}\n")
+        except:
+            pass
+        f.close()
+
         return result.json()
