@@ -37,17 +37,18 @@ class Http:
         )
         result.raise_for_status()
 
-        f = open(self.requests_logs_file_path, "a")
-        f.write(f"\n\n########################  {datetime.now()}\n")
-        f.write("--- Request\n")
-        f.write(f"{result.request.url}\n")
-        f.write(f"{json.dumps(dict(result.request.headers), indent=4)}\n")
-        f.write(f"{json.dumps(body, indent=4)}\n")
-        try:
-            f.write("--- Response\n")
-            f.write(f"{json.dumps(result.json(), indent=4)}\n")
-        except:
-            pass
-        f.close()
+        if self.requests_logs_file_path:
+            f = open(self.requests_logs_file_path, "a")
+            f.write(f"\n\n########################  {datetime.now()}\n")
+            f.write("--- Request\n")
+            f.write(f"{result.request.url}\n")
+            f.write(f"{json.dumps(dict(result.request.headers), indent=4)}\n")
+            f.write(f"{json.dumps(body, indent=4)}\n")
+            try:
+                f.write("--- Response\n")
+                f.write(f"{json.dumps(result.json(), indent=4)}\n")
+            except:
+                pass
+            f.close()
 
         return result.json()
