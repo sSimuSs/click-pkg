@@ -68,11 +68,21 @@ class MerchantApi:
         url = f"{self.url}/payment/ofd_data/submit_qrcode"
         return self._send_post_request(url, data)
 
+    def reverse_invoice(self, payment_id: int):
+        url = f"{self.url}/payment/reversal/{self.service_id}/{payment_id}"
+        return self._send_delete_request(url)
+
     def _send_post_request(self, url: str, data: dict) -> dict:
+        return self.http.post(url, data, self._get_request_headers(), 10)
+
+    def _send_delete_request(self, url: str) -> dict:
+        return self.http.delete(url, self._get_request_headers(), 10)
+
+    def _get_request_headers(self) -> dict:
         timestamp = int(time.time())
         digest_input = f"{timestamp}{self.secret_key}"
         digest = hashlib.sha1(digest_input.encode()).hexdigest()
         headers = {
             "Auth": f"{self.merchant_user_id}:{digest}:{timestamp}",
         }
-        return self.http.post(url, data, headers, 10)
+        return headers
