@@ -168,7 +168,8 @@ class ClickWebhook(APIView):
         transaction = ClickTransaction.get_or_create(
             account_id=account.id,
             amount=params.amount,
-            transaction_id=params.click_trans_id
+            transaction_id=params.click_trans_id,
+            click_payment_id=params.click_paydoc_id
         )
 
         # callback event
@@ -196,6 +197,7 @@ class ClickWebhook(APIView):
             account_id=account.id,
             amount=params.amount,
             transaction_id=params.click_trans_id,
+            click_payment_id=params.click_paydoc_id,
             state=state
         )
 

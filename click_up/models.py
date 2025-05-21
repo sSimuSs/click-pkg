@@ -23,7 +23,8 @@ class ClickTransaction(models.Model):
         (SUCCESSFULLY, "Successfully"),
     ]
     state = models.IntegerField(choices=STATE, default=CREATED)
-    transaction_id = models.CharField(max_length=255)
+    transaction_id = models.CharField(max_length=255, help_text="click_trans_id")
+    click_payment_id = models.CharField(max_length=255, blank=True, null=True, help_text="click_paydoc_id")
     account_id = models.BigIntegerField(null=False)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -44,6 +45,7 @@ class ClickTransaction(models.Model):
         account_id,
         transaction_id,
         amount,
+        click_payment_id,
         state=None
     ) -> "ClickTransaction":
         """
@@ -54,6 +56,7 @@ class ClickTransaction(models.Model):
             account_id=account_id,
             amount=amount,
             transaction_id=transaction_id,
+            click_payment_id=click_payment_id,
             defaults={"state": cls.INITIATING},
         )
         if state is not None:
@@ -68,6 +71,7 @@ class ClickTransaction(models.Model):
         account_id,
         transaction_id,
         amount,
+        click_payment_id,
         state=None
     ) -> "ClickTransaction":
         """
@@ -78,6 +82,7 @@ class ClickTransaction(models.Model):
             account_id=account_id,
             amount=amount,
             transaction_id=transaction_id,
+            click_payment_id=click_payment_id,
             defaults={"state": cls.INITIATING},
         )
         if state is not None:
