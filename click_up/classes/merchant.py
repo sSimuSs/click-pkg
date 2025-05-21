@@ -18,7 +18,7 @@ class MerchantApi:
         """
         self.http = Http()
         self.secret_key = secret_key
-        self.service_id = service_id
+        self.service_id = int(service_id)
         self.merchant_user_id = merchant_user_id
         self.url = "https://api.click.uz/v2/merchant"
 
